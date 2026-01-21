@@ -11,20 +11,15 @@ public class TreeBFS {
             this.right = null;
 
         }
-
         public ArrayList<ArrayList<Integer>> BFS (TreeNode<Integer> root) {
             ArrayList<ArrayList<Integer>> res = new ArrayList<>();
             if(root == null){
                 return res;
             }
-
             Queue<TreeNode> queue = new LinkedList<>();
-
             queue.offer(root);
-
             while(!queue.isEmpty()){
                 int levelSize = queue.size();
-
                 ArrayList<Integer> currLevel = new ArrayList<>(levelSize);
                 for(int i=0;i<levelSize;i++){
                     TreeNode currNode = queue.poll();
@@ -40,11 +35,8 @@ public class TreeBFS {
                 }
                 res.add(currLevel);
             }
-
             return res;
         }
-
-
         public TreeNode findSuccessor(TreeNode root , int key ){
             if(root==null){
                 return null;
@@ -59,7 +51,6 @@ public class TreeBFS {
                 if(node.right != null){
                     queue.offer(node.right);
                 }
-
                 if((Integer) node.data == key){
                     break;
                 }

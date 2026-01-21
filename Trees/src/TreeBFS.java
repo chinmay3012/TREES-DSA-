@@ -43,5 +43,28 @@ public class TreeBFS {
 
             return res;
         }
+
+
+        public TreeNode findSuccessor(TreeNode root , int key ){
+            if(root==null){
+                return null;
+            }
+            Queue<TreeNode> queue = new LinkedList<>();
+            queue.offer(root);
+            while(!queue.isEmpty()){
+                TreeNode node = queue.poll();
+                if(node.left != null){
+                    queue.offer(node.left);
+                }
+                if(node.right != null){
+                    queue.offer(node.right);
+                }
+
+                if((Integer) node.data == key){
+                    break;
+                }
+            }
+            return queue.peek();
+        }
     }
 }

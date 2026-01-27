@@ -1,12 +1,12 @@
 import java.util.*;
 public class TreeBFS {
     class TreeNode<E> {
-        E data;
+        E val;
         TreeNode left;
         TreeNode right;
 
         public TreeNode(E data){
-            this.data = data;
+            this.val = data;
             this.left = null;
             this.right = null;
 
@@ -24,7 +24,7 @@ public class TreeBFS {
                 for(int i=0;i<levelSize;i++){
                     TreeNode currNode = queue.poll();
 
-                    currLevel.add((Integer) currNode.data);
+                    currLevel.add((Integer) currNode.val);
 
                     if(currNode.left != null){
                         queue.offer(currNode.left);
@@ -37,6 +37,8 @@ public class TreeBFS {
             }
             return res;
         }
+
+        //Finding successor node
         public TreeNode findSuccessor(TreeNode root , int key ){
             if(root==null){
                 return null;
@@ -51,11 +53,55 @@ public class TreeBFS {
                 if(node.right != null){
                     queue.offer(node.right);
                 }
-                if((Integer) node.data == key){
+                if((Integer) node.val == key){
                     break;
                 }
             }
             return queue.peek();
         }
+
+
+        //103. Binary Tree Zigzag Level Order Traversal
+        class Solution {
+            public List<List<Integer>> zigzagLevelOrder(TreeNode root) {
+                List<List<Integer>> res = new ArrayList<>();
+                if (root == null) return res;
+
+                Deque<TreeNode> queue = new LinkedList<>();
+                queue.offer(root);
+
+                boolean reverse = false;
+
+                while (!queue.isEmpty()) {
+                    int levelSize = queue.size();
+                    List<Integer> currLevel = new ArrayList<>(levelSize);
+
+                    for (int i = 0; i < levelSize; i++) {
+                        if (!reverse) {
+                            TreeNode currNode = queue.pollFirst();
+                            currLevel.add((Integer) currNode.val);
+
+                            if (currNode.left != null) queue.addLast(currNode.left);
+                            if (currNode.right != null) queue.addLast(currNode.right);
+
+                        } else {
+                            TreeNode currNode = queue.pollLast();
+                            currLevel.add((Integer) currNode.val);
+
+                            if (currNode.right != null) queue.addFirst(currNode.right);
+                            if (currNode.left != null) queue.addFirst(currNode.left);
+                        }
+                    }
+
+                    // toggle AFTER finishing the level
+                    reverse = !reverse;
+                    res.add(currLevel);
+                }
+
+                return res;
+            }
+        }
+
+
     }
 }
